@@ -9,7 +9,7 @@ def Encoder(signal):
         p1 = int(signal[i-1])^int(signal[i])
         transmit = transmit+ str(p0)+str(p1) #encode parity bits to send to modulator
 
-    return transmit
+    return(transmit)
 
 if __name__ == "__main__":
     test = Encoder("101100")

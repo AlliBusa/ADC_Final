@@ -9,7 +9,7 @@ The main steps are:
 
 """
 import Decoder
-import Encoder
+from Encoder import Encoder
 import numpy as np
 
 def generateRandomSignal(desired_length):
@@ -17,17 +17,24 @@ def generateRandomSignal(desired_length):
     Create random binary signal with input length
     """
     #signal = np.random.randbytes(desired_length) # this only works with random 3.9
-    signal = np.random.random()
+    signal = np.random.random((desired_length,)) #make random signal
+    signal = np.where(signal > 0.5, 1, 0) #make binary
+    #signal = str(signal).strip('[]')
+    signal = ''.join(map(str, signal))
     return(signal)
 
 def addNoise(encodedSignal):
     """
     takes in encoded signal and adds noise to it
     """
-    noise = np.random.normal(0,1,len(encodedSignal))
-    noise = np.where(noise > 0.5, 1, 0)
+    noise = np.random.normal(0,1,len(encodedSignal)) #make normally distributed noise
+    noise = np.where(noise > 0.5, 1, 0) #make binary
+    noise = ''.join(map(str, noise))
+    return(noise)
 
-def main():
+if __name__ == "__main__":
     sig = generateRandomSignal(100)
     enc_sig = Encoder(sig)
-    noisy_sig = addNoise(enc_sig)
+    noisy_sig = addNoise(sig)
+    print("signal", sig)
+    print("noisy signal", noisy_sig)
